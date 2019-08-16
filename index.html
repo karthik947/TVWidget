@@ -1,0 +1,50 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script src="exchangeInfo.js"></script>
+</head>
+<body>
+<select onChange="LoadCharts();" id="pairs">
+<!--    <option value="BTCUSDT">BTCUSDT</option>
+    <option value="ETHUSDT">ETHUSDT</option>-->
+</select>
+<br>
+<div class="tradingview-widget-container" id="tvchart"></div>
+</body>
+<script>
+
+
+//PASS ALL THE SYMBOLS 
+var sym = exchangeInfo.symbols,markup='';
+sym.forEach(d => {
+    markup += '<option value="' + d.symbol + '">' + d.symbol + '</option>';
+});
+document.getElementById('pairs').innerHTML = markup;
+  
+LoadCharts();    
+function LoadCharts(){
+    let symbol = document.getElementById('pairs').value;
+    //RENDER CHART
+    new TradingView.widget(
+      {
+  "autosize": true,
+  "symbol": "BINANCE:" + symbol,
+  "interval": "5",
+  "timezone": "Asia/Kolkata",
+  "theme": "Light",
+  "style": "1",
+  "locale": "in",
+  "toolbar_bg": "#f1f3f6",
+  "enable_publishing": false,
+  "allow_symbol_change": true,
+  "studies": [
+    "AwesomeOscillator@tv-basicstudies",
+    "MACD@tv-basicstudies",
+    "RSI@tv-basicstudies"
+  ],
+  "container_id": "tvchart"
+    });
+}
+    
+</script>
+</html>
